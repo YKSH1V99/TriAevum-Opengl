@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - feature/oot3d-opengl-backend
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:

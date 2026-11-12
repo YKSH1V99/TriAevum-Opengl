@@ -68,7 +68,7 @@ set(ADDITIONAL_LIB_INCLUDES "")
 # ========= Configuration Options =========
 option(INCLUDE_MPQ_SUPPORT "Enable StormLib and MPQ archive support" OFF)
 set(GBI_UCODE F3DEX_GBI_2 CACHE STRING "Specify the GBI ucode version")
-option(THREE_DS_RECOMP_ENABLE_DX11 "Build the legacy Direct3D 11 backend on Windows" OFF)
+option(THREE_DS_RECOMP_ENABLE_DX11 "Build the legacy Direct3D 11 backend on Windows" ON)
 option(THREE_DS_RECOMP_ENABLE_VULKAN "Build the native 3DS Vulkan backend" OFF)
 option(THREE_DS_RECOMP_ENABLE_NRI "Enable NVIDIA NRI interop for the native 3DS Vulkan backend" ${THREE_DS_RECOMP_ENABLE_VULKAN})
 cmake_dependent_option(THREE_DS_RECOMP_ENABLE_NRI_UPSCALER_SDKS

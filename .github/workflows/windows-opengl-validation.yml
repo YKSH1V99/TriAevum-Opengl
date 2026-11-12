@@ -1,0 +1,32 @@
+name: Windows OpenGL backend validation
+
+on:
+  push:
+    branches:
+      - feature/oot3d-opengl-backend
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-opengl-runtime:
+    runs-on: windows-2022
+    timeout-minutes: 120
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Configure x64 OpenGL runtime
+        run: >-
+          cmake -S . -B build -A x64
+          -DCMAKE_BUILD_TYPE=Release
+          -DOOT3D_ENABLE_VULKAN_RENDERER=OFF
+          -DTHREE_DS_RECOMP_ENABLE_VULKAN=OFF
+          -DOOT3D_FAST_DEV_LINK=ON
+
+      - name: Build native runtime (including OpenGL PICA backend)
+        run: cmake --build build --config Release --target three_ds_recomp_runtime --parallel 2

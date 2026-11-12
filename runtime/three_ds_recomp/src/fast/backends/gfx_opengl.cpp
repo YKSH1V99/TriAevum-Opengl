@@ -7,6 +7,8 @@
 
 #include <algorithm>
 #include <map>
+#include <stdexcept>
+#include <string>
 #include <unordered_map>
 
 #ifndef _LANGUAGE_C
@@ -1059,7 +1061,15 @@ bool GfxRenderingAPIOGL::DrawTrianglesCached(uint64_t cache_id, uint64_t content
 
 void GfxRenderingAPIOGL::Init() {
 #if !defined(__linux__) && !defined(__OpenBSD__) && !defined(__SWITCH__)
-    glewInit();
+    const GLenum glewStatus = glewInit();
+    if (glewStatus != GLEW_OK) {
+        const auto* glewError = glewGetErrorString(glewStatus);
+        throw std::runtime_error(
+            std::string("OpenGL extension loader initialization failed: ") +
+            (glewError != nullptr
+                 ? reinterpret_cast<const char*>(glewError)
+                 : "unknown GLEW error"));
+    }
 #endif
 
     glGenBuffers(1, &mOpenglVbo);
